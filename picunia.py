@@ -17,9 +17,12 @@ def create_account():
 	msg['password'] = passwd
 	msg['reg_id'] = "t9PTZcW8C1NMQAHAHSTkc"
 
-	req = urllib2.Request('http://picunia.com/api/v1.0/register_account')
-	req.add_header('Content-Type', 'application/json')
-	response = urllib2.urlopen(req, json.dumps(msg))
+	url = 'http://picunia.com/api/v1.0/register_account'
+	headers = {'Content-Type': 'application/json'}
+	r = requests.post(url, data=json.dumps(msg), headers=headers)
+	print r
+	print r.json
+	print r.text
 
 def get_user_info():
 	email = raw_input("Enter email for account: ")
