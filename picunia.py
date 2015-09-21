@@ -1,6 +1,7 @@
 import requests, base64, urllib, urllib2, json
 from requests.auth import HTTPBasicAuth
 
+base_url = 'http://localhost:5000'
 
 def create_account():
 	email = raw_input("Enter email for account: ")
@@ -17,7 +18,7 @@ def create_account():
 	msg['password'] = passwd
 	msg['reg_id'] = "t9PTZcW8C1NMQAHAHSTkc"
 
-	url = 'http://picunia.com/api/v1.0/register_account'
+	url = base_url + '/api/v1.0/register_account'
 	headers = {'Content-Type': 'application/json'}
 	r = requests.post(url, data=json.dumps(msg), headers=headers)
 	print r
@@ -28,7 +29,7 @@ def get_user_info():
 	email = raw_input("Enter email for account: ")
 	passwd = raw_input("Enter passwd for account: ")
 
-	url = 'http://picunia.com/api/v1.0/account_info/%s' % email.replace('\n', '')
+	url = base_url + '/api/v1.0/account_info/%s' % email.replace('\n', '')
 	headers = {'Content-Type': 'application/json'}
 	r = requests.get(url, auth=HTTPBasicAuth(email,passwd), headers=headers)
 	print r.text
@@ -42,7 +43,7 @@ def pay_someone():
 	my_email = raw_input("Login: enter email: ")
 	passwd = raw_input("Login: passwd: ")
 
-	url = 'http://picunia.com/api/v1.0/pay_to_address'
+	url = base_url + '/api/v1.0/pay_to_address'
 	payload = {}
 	payload['from'] = my_email
 	payload['to'] = email
@@ -60,7 +61,7 @@ def write_blockchain_message():
 	passwd = raw_input("Login: passwd: ")
 	msg = raw_input("Enter your blockchain message: ")
 
-	url = 'http://picunia.com/api/v1.0/blockchain_message'
+	url = base_url + '/api/v1.0/blockchain_message'
 	payload = {}
 	payload['email'] = my_email
 	payload['message'] = msg
