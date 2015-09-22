@@ -1,7 +1,7 @@
 import requests, base64, urllib, urllib2, json
 from requests.auth import HTTPBasicAuth
 
-base_url = 'http://localhost:5000'
+base_url = 'http://picunia.com'
 
 def create_account():
 	email = raw_input("Enter email for account: ")
@@ -51,7 +51,10 @@ def pay_someone():
 	payload['msg'] = msg
 	#sandra.green@example.com
 	headers = {'Content-Type': 'application/json'}
-	r = requests.post(url, auth=HTTPBasicAuth(my_email,passwd), data=json.dumps(payload), headers=headers)
+	r = requests.post(url,
+				auth=HTTPBasicAuth(my_email,passwd),
+				data=json.dumps(payload),
+				headers=headers)
 	print r
 	print r.json
 	print r.text
@@ -67,10 +70,38 @@ def write_blockchain_message():
 	payload['message'] = msg
 
 	headers = {'Content-Type': 'application/json'}
-	r = requests.post(url, auth=HTTPBasicAuth(my_email,passwd), data=json.dumps(payload), headers=headers)
+	r = requests.post(url,
+				auth=HTTPBasicAuth(my_email,passwd),
+				data=json.dumps(payload),
+				headers=headers)
 	print r
 	print r.json
 	print r.text	
+
+def request_payment():
+	my_email = raw_input("Login: enter email: ")
+	passwd = raw_input("Login: passwd: ")
+	request_from = raw_input("email from you wish to request from: ")
+	amount = raw_input("amount to request: ")
+	msg = raw_input("message to %s: " % request_from)
+
+	url = base_url + '/api/v1.0/request_payment'
+	payload = {}
+	payload['requester'] = my_email
+	payload['request_from'] = request_from
+	payload['amount'] = amount
+	payload['message'] = msg
+
+
+	headers = {'Content-Type': 'application/json'}
+	r = requests.post(url,
+				auth=HTTPBasicAuth(my_email,passwd),
+				data=json.dumps(payload),
+				headers=headers)
+	print r
+	print r.json
+	print r.text
+
 
 def main_menu():
 	ans=True
@@ -80,7 +111,8 @@ def main_menu():
 		2. get user info
 		3. pay some one
 		4. write blockchain message
-		5. Exit/End
+		5. request payment
+		6. Exit/End
 		""")
 		ans=raw_input("What would you like to do? ") 
 		if ans=="1": 
@@ -92,6 +124,8 @@ def main_menu():
 		elif ans=="4":
 			write_blockchain_message()
 		elif ans=="5":
+			request_payment()
+		elif ans=="6":
 			exit(1)			
 		elif ans !="":
 			print("\n Not Valid Choice Try again") 
