@@ -1,6 +1,7 @@
 import requests, base64, urllib, urllib2, json
 from requests.auth import HTTPBasicAuth
 
+#base_url = 'http://localhost:5000'
 base_url = 'http://picunia.com'
 
 def create_account():
@@ -22,8 +23,9 @@ def create_account():
 	headers = {'Content-Type': 'application/json'}
 	r = requests.post(url, data=json.dumps(msg), headers=headers)
 	print r
-	print r.json
 	print r.text
+	print r.json
+	print r.headers
 
 def get_user_info():
 	email = raw_input("Enter email for account: ")
@@ -32,7 +34,11 @@ def get_user_info():
 	url = base_url + '/api/v1.0/account_info/%s' % email.replace('\n', '')
 	headers = {'Content-Type': 'application/json'}
 	r = requests.get(url, auth=HTTPBasicAuth(email,passwd), headers=headers)
+	print r
 	print r.text
+	print r.json
+	print r.headers
+	print r.headers['location']
 
 def pay_someone():
 	email = raw_input("Enter email to send bitcoint to: ")
@@ -56,8 +62,10 @@ def pay_someone():
 				data=json.dumps(payload),
 				headers=headers)
 	print r
-	print r.json
 	print r.text
+	print r.json
+	print r.headers
+	print r.headers['location']
 
 def write_blockchain_message():
 	my_email = raw_input("Login: enter email: ")
@@ -75,8 +83,10 @@ def write_blockchain_message():
 				data=json.dumps(payload),
 				headers=headers)
 	print r
+	print r.text
 	print r.json
-	print r.text	
+	print r.headers
+	print r.headers['location']	
 
 def request_payment():
 	my_email = raw_input("Login: enter email: ")
@@ -99,8 +109,10 @@ def request_payment():
 				data=json.dumps(payload),
 				headers=headers)
 	print r
-	print r.json
 	print r.text
+	print r.json
+	print r.headers
+	print r.headers['location']
 
 
 def main_menu():
