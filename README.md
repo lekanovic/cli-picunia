@@ -2,7 +2,7 @@
 
 
 ### install
-virtualen ENV
+virtualenv ENV
 
 . ENV/bin/activate
 
